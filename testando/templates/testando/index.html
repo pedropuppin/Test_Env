@@ -4,13 +4,13 @@
         {% include "testando/partials/_head.html" %}
     </head>
     <body>
-        <h1>List Items</h1>
+        <h1>List Items JS</h1>
         <label for="toggle-checkbox">Toggle Items:</label>
         <input type="checkbox" id="toggle-checkbox">
         
         <ul>
-            {% for pedido in pedidos %}
-                <li class="{% if pedido.status == status %}hidden{% endif %}">
+            {% for pedido in pedidos_JS %}
+                <li class="{% if pedido.status == status_JS %}hidden{% endif %}">
                     {{ pedido.name }} - {{ pedido.status }}
                 </li>
             {% endfor %}
@@ -28,5 +28,24 @@
                 });
             });
         </script>
+        
+        <!-- ///////////////////////////////////////////////////////////////////// -->
+        
+        <h1>List Items Python</h1>
+        <form method="GET" action="">
+            <label for="status-select">Select Status:</label>
+            <select id="status-select" name="status">
+                <option value="Aguardando início">Aguardando início</option>
+                <option value="Arquivado">Arquivado</option>
+            </select>
+            <button type="submit">Apply Filter</button>
+        </form>
+        <ul>
+            {% for pedido in pedidos %}
+                <li>
+                    {{ pedido.name }} - {{ pedido.status }}
+                </li>
+            {% endfor %}
+        </ul>
     </body>
 </html>
