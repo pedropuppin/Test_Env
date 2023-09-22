@@ -3,49 +3,35 @@
     <head>
         {% include "testando/partials/_head.html" %}
     </head>
+
     <body>
-        <h1>List Items JS</h1>
-        <label for="toggle-checkbox">Toggle Items:</label>
-        <input type="checkbox" id="toggle-checkbox">
-        
-        <ul>
-            {% for pedido in pedidos_JS %}
-                <li class="{% if pedido.status == status_JS %}hidden{% endif %}">
-                    {{ pedido.name }} - {{ pedido.status }}
-                </li>
-            {% endfor %}
-        </ul>
-        
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const checkbox = document.getElementById('toggle-checkbox');
-                const hiddenItems = document.querySelectorAll('.hidden');
-    
-                checkbox.addEventListener('change', function () {
-                    hiddenItems.forEach(function (item) {
-                        item.style.display = checkbox.checked ? 'none' : 'list-item';
-                    });
-                });
-            });
-        </script>
-        
-        <!-- ///////////////////////////////////////////////////////////////////// -->
-        
-        <h1>List Items Python</h1>
-        <form method="GET" action="">
-            <label for="status-select">Select Status:</label>
-            <select id="status-select" name="status">
-                <option value="Aguardando início">Aguardando início</option>
-                <option value="Arquivado">Arquivado</option>
-            </select>
-            <button type="submit">Apply Filter</button>
+
+        <form method="get" action="">
+            {% csrf_token %}
+            {{ filter_form.as_p }}
+            <button type="submit">Filter</button>
         </form>
-        <ul>
-            {% for pedido in pedidos %}
-                <li>
-                    {{ pedido.name }} - {{ pedido.status }}
-                </li>
-            {% endfor %}
-        </ul>
+        
+        <table border= 1>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pedido in pedidos %}
+                    <tr>
+                        <td>{{ pedido.name }}</td>
+                        <td>{{ pedido.status }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="2">No matching records found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table> 
     </body>
+    
 </html>
